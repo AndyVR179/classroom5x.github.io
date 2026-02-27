@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Classroom 5X</title>
+<title>Classroom 55X</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -34,6 +34,7 @@ border-right:1px solid #111;
 padding:12px 20px;
 color:#aaa;
 cursor:pointer;
+transition:0.2s;
 }
 .sidebar li:hover{
 background:#111;
@@ -50,7 +51,6 @@ padding:30px;
 width:100%;
 }
 
-/* HOME HERO */
 .home-hero{
 background:#111;
 padding:60px;
@@ -63,7 +63,6 @@ margin-bottom:40px;
 font-size:34px;
 }
 
-/* GRID */
 .games{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
@@ -93,12 +92,10 @@ padding:10px;
 font-size:14px;
 }
 
-/* GAME PAGE */
-
 .hidden{display:none}
 
 .game-hero{
-height:300px;
+height:250px;
 background:linear-gradient(135deg,#4a148c,#e91e63);
 display:flex;
 flex-direction:column;
@@ -128,7 +125,7 @@ color:#000;
 border:none;
 border-radius:6px;
 cursor:pointer;
-margin:15px 0;
+margin-top:15px;
 font-weight:bold;
 }
 
@@ -137,39 +134,15 @@ width:100%;
 height:80vh;
 border:none;
 background:#000;
-}
-
-.frame-wrapper{
 margin-top:20px;
-position:relative;
-background:#111;
-border-radius:12px;
-overflow:hidden;
-}
-
-.fullscreen-btn{
-position:absolute;
-bottom:10px;
-right:10px;
-background:#000;
-color:#fff;
-border:1px solid #444;
-padding:6px 10px;
-cursor:pointer;
-border-radius:6px;
-z-index:5;
-}
-
-.section-title{
-margin:40px 0 20px;
-font-size:20px;
 }
 </style>
 </head>
+
 <body>
 
 <div class="navbar">
-<div class="logo">CLASSROOM 5X</div>
+<div class="logo">CLASSROOM 55X</div>
 </div>
 
 <div class="container">
@@ -178,31 +151,35 @@ font-size:20px;
 <ul>
 <li class="active" onclick="filterCategory('All', this)">All Games</li>
 <li onclick="filterCategory('Sports', this)">Sports</li>
+<li onclick="filterCategory('Driving', this)">Driving</li>
+<li onclick="filterCategory('Action', this)">Action</li>
+<li onclick="filterCategory('Multiplayer', this)">Multiplayer</li>
 </ul>
 </div>
 
 <div class="main">
 
-<!-- HOME -->
 <div id="homePage">
+
 <div class="home-hero">
-<h1>Classroom 5X – Fun Games To Play</h1>
-</div>
-<div class="games" id="gameGrid"></div>
+<h1>Classroom 55X fun games to play</h1>
 </div>
 
-<!-- GAME PAGE -->
+<h2>Popular Games</h2>
+<br>
+<div class="games" id="gamesGrid"></div>
+
+</div>
+
 <div id="gamePage" class="hidden">
+
 <div class="game-hero">
-<button class="back-btn" onclick="goHome()">← Back</button>
+<button class="back-btn" onclick="goHome()">Back</button>
 <h2 id="gameTitle"></h2>
-<button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
+<button class="play-btn" onclick="startGame()">Play</button>
 </div>
 
-<div class="frame-wrapper">
-<iframe id="gameFrame"></iframe>
-<button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
-</div>
+<iframe id="gameFrame" allowfullscreen></iframe>
 
 </div>
 
@@ -210,109 +187,62 @@ font-size:20px;
 </div>
 
 <script>
-
-const games=[
-
+const games = [
 {
 title:"Basket Random",
 category:"Sports",
-type:"custom",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Basket+Random",
-custom: `
-<html>
-<head><base target="_blank"></head>
-<body style="margin:0;background:#000;overflow:hidden;">
-
-<div style="position:relative;width:100%;height:100vh;">
-
-<iframe id="fr" width="100%" height="100%" frameborder="0" allowfullscreen style="display:none;"></iframe>
-
-<div id="buttons" style="
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-display:flex;
-flex-direction:column;
-gap:20px;">
-
-<button onclick="PlayOfficial()" style="
-padding:20px 40px;
-background:#000;
-color:#fff;
-border:2px solid #00c853;
-border-radius:10px;
-font:bold 22px Arial;
-cursor:pointer;">
-PLAY OFFICIAL
-</button>
-
-<button onclick="PlaySchool()" style="
-padding:20px 40px;
-background:#000;
-color:#fff;
-border:2px solid #4a148c;
-border-radius:10px;
-font:bold 22px Arial;
-cursor:pointer;">
-PLAY FOR SCHOOL
-</button>
-
-</div>
-
-<script>
-const OFFICIAL_URL="https://www.twoplayergames.org/embed/basket-random";
-const FILE_URL="https://cdn.jsdelivr.net/gh/ragdoi-archers/ishere@main/basrand.xml";
-
-function PlayOfficial(){
-const iframe=document.getElementById("fr");
-iframe.src=OFFICIAL_URL;
-iframe.style.display="block";
-document.getElementById("buttons").style.display="none";
+url:"https://www.twoplayergames.org/embed/basket-random",
+thumb:"https://dummyimage.com/300x170/222/fff&text=Basket+Random"
+},
+{
+title:"Smash Karts",
+category:"Multiplayer",
+url:"https://smashkarts.io",
+thumb:"https://dummyimage.com/300x170/333/fff&text=Smash+Karts"
+},
+{
+title:"Drift Hunters",
+category:"Driving",
+url:"https://www.onlinegames.io/games/2021/unity/drift-hunters/index.html",
+thumb:"https://dummyimage.com/300x170/444/fff&text=Drift+Hunters"
+},
+{
+title:"Run 3",
+category:"Action",
+url:"https://run3.io",
+thumb:"https://dummyimage.com/300x170/555/fff&text=Run+3"
+},
+{
+title:"Soccer Random",
+category:"Sports",
+url:"https://www.twoplayergames.org/embed/soccer-random",
+thumb:"https://dummyimage.com/300x170/666/fff&text=Soccer+Random"
 }
-
-function PlaySchool(){
-fetch(FILE_URL)
-.then(r=>r.text())
-.then(text=>{
-const iframe=document.getElementById("fr");
-iframe.contentDocument.open();
-iframe.contentDocument.write(text);
-iframe.contentDocument.close();
-iframe.style.display="block";
-document.getElementById("buttons").style.display="none";
-});
-}
-</script>
-
-</div>
-</body>
-</html>
-`
-}
-
 ];
 
 let currentGame=null;
 
-function renderGames(filter="All"){
-const grid=document.getElementById("gameGrid");
+function renderGames(category="All"){
+const grid=document.getElementById("gamesGrid");
 grid.innerHTML="";
-games.forEach(g=>{
-if(filter==="All"||g.category===filter){
-let card=document.createElement("div");
+games.forEach(game=>{
+if(category==="All"||game.category===category){
+const card=document.createElement("div");
 card.className="game-card";
-card.onclick=()=>openGame(g);
-card.innerHTML=\`<img src="\${g.thumb}"><h3>\${g.title}</h3>\`;
+card.innerHTML=`
+<img src="${game.thumb}">
+<h3>${game.title}</h3>
+`;
+card.onclick=()=>openGame(game);
 grid.appendChild(card);
 }
 });
 }
 
-function filterCategory(cat, el){
+function filterCategory(category,el){
 document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
 el.classList.add("active");
-renderGames(cat);
+renderGames(category);
 }
 
 function openGame(game){
@@ -320,27 +250,20 @@ currentGame=game;
 document.getElementById("homePage").classList.add("hidden");
 document.getElementById("gamePage").classList.remove("hidden");
 document.getElementById("gameTitle").innerText=game.title;
-}
-
-function startGame(){
-const frame=document.getElementById("gameFrame");
-if(currentGame.type==="custom"){
-frame.srcdoc=currentGame.custom;
-}
-}
-
-function goFullscreen(){
-document.getElementById("gameFrame").requestFullscreen();
-}
-
-function goHome(){
-document.getElementById("gamePage").classList.add("hidden");
-document.getElementById("homePage").classList.remove("hidden");
 document.getElementById("gameFrame").src="";
 }
 
-renderGames();
+function startGame(){
+document.getElementById("gameFrame").src=currentGame.url;
+}
 
+function goHome(){
+document.getElementById("gameFrame").src="";
+document.getElementById("gamePage").classList.add("hidden");
+document.getElementById("homePage").classList.remove("hidden");
+}
+
+renderGames();
 </script>
 
 </body>
