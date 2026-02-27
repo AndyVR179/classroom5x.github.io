@@ -228,10 +228,70 @@ if(e.persisted) window.location.reload();
 const games=[
 
 {
+{
 title:"Basket Random",
 category:"Sports",
-type:"url",
-url:"https://basket-random.github.io/",
+type:"xml",
+file:"data:text/html;charset=utf-8," + encodeURIComponent(`
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body, html { margin:0; padding:0; height:100%; background:#000; }
+#container { width:100%; height:100%; display:flex; justify-content:center; align-items:center; flex-direction:column; }
+iframe { width:100%; height:100%; border:none; display:none; }
+#button-wrapper { display:flex; flex-direction:column; gap:20px; }
+.play-button {
+padding:18px 40px;
+background:#000;
+color:#fff;
+border:2px solid #4a148c;
+border-radius:10px;
+font:bold 20px Arial;
+cursor:pointer;
+transition:.3s;
+}
+.play-button:hover { background:#4a148c; transform:scale(1.05); }
+</style>
+</head>
+<body>
+
+<div id="container">
+<div id="button-wrapper">
+<button class="play-button" onclick="playOfficial()">PLAY OFFICIAL</button>
+<button class="play-button" onclick="playSchool()">PLAY FOR SCHOOL</button>
+</div>
+<iframe id="gameFrame"></iframe>
+</div>
+
+<script>
+const OFFICIAL_URL="https://www.twoplayergames.org/embed/basket-random";
+const FILE_URL="https://cdn.jsdelivr.net/gh/ragdoi-archers/ishere@main/basrand.xml";
+
+function playOfficial(){
+const frame=document.getElementById("gameFrame");
+frame.src=OFFICIAL_URL;
+frame.style.display="block";
+document.getElementById("button-wrapper").style.display="none";
+}
+
+function playSchool(){
+fetch(FILE_URL)
+.then(r=>r.text())
+.then(t=>{
+const frame=document.getElementById("gameFrame");
+frame.srcdoc=t;
+frame.style.display="block";
+document.getElementById("button-wrapper").style.display="none";
+});
+}
+</script>
+
+</body>
+</html>
+`)
+,
 thumb:"https://dummyimage.com/300x170/111/fff&text=Basket+Random"
 },
 
@@ -350,4 +410,5 @@ renderGames();
 
 </body>
 </html>
+
 
