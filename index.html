@@ -302,13 +302,17 @@ renderPopular();
 
 function startGame(){
 const frame=document.getElementById("gameFrame");
+
+if(currentGame.type==="url"){
+// Open in new tab instead of iframe (fixes black screen)
+window.open(currentGame.url, "_blank");
+return;
+}
+
 frame.style.display="block";
 document.querySelector(".play-btn").style.display="none";
 
-if(currentGame.type==="url"){
-frame.src=currentGame.url;
-}
-else if(currentGame.type==="xml"){
+if(currentGame.type==="xml"){
 fetch(currentGame.file)
 .then(r=>r.text())
 .then(t=>frame.srcdoc=t);
@@ -346,3 +350,4 @@ renderGames();
 
 </body>
 </html>
+
