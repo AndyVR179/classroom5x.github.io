@@ -34,30 +34,12 @@ border-right:1px solid #111;
 padding:12px 20px;
 color:#aaa;
 cursor:pointer;
-position:relative;
-transition:.25s ease;
+transition:.25s;
 }
-.sidebar li:hover{
-background:#111;
-color:#fff;
-}
+.sidebar li:hover,
 .sidebar li.active{
 background:#111;
 color:#fff;
-}
-.sidebar li::after{
-content:"";
-position:absolute;
-left:0;
-bottom:0;
-height:2px;
-width:0%;
-background:#e91e63;
-transition:.3s;
-}
-.sidebar li:hover::after,
-.sidebar li.active::after{
-width:100%;
 }
 
 .main{
@@ -100,8 +82,10 @@ font-size:14px;
 }
 
 /* GAME PAGE */
+.hidden{display:none}
+
 .game-hero{
-height:300px;
+height:250px;
 background:linear-gradient(135deg,#4a148c,#e91e63);
 display:flex;
 flex-direction:column;
@@ -111,6 +95,7 @@ border-radius:12px;
 position:relative;
 text-align:center;
 }
+
 .back-btn{
 position:absolute;
 top:15px;
@@ -122,6 +107,7 @@ padding:6px 12px;
 cursor:pointer;
 border-radius:6px;
 }
+
 .play-btn{
 padding:10px 25px;
 background:#fff;
@@ -129,45 +115,23 @@ color:#000;
 border:none;
 border-radius:6px;
 cursor:pointer;
-margin:15px 0;
+margin-top:15px;
 font-weight:bold;
-}
-
-.frame-wrapper{
-margin-top:20px;
-position:relative;
-background:#111;
-border-radius:12px;
-overflow:hidden;
 }
 
 #gameFrame{
 width:100%;
 height:600px;
 border:none;
+margin-top:20px;
 display:none;
 background:#000;
-}
-
-.fullscreen-btn{
-position:absolute;
-bottom:10px;
-right:10px;
-background:#000;
-color:#fff;
-border:1px solid #444;
-padding:6px 10px;
-cursor:pointer;
-border-radius:6px;
-z-index:5;
 }
 
 .section-title{
 margin:40px 0 20px;
 font-size:20px;
 }
-
-.hidden{display:none}
 </style>
 </head>
 
@@ -207,10 +171,7 @@ font-size:20px;
 <button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
 </div>
 
-<div class="frame-wrapper">
 <iframe id="gameFrame"></iframe>
-<button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
-</div>
 
 <div class="section-title">Popular Games</div>
 <div class="games" id="popularGames"></div>
@@ -221,109 +182,53 @@ font-size:20px;
 
 <script>
 
-window.addEventListener("pageshow", function(e){
-if(e.persisted) window.location.reload();
-});
-
 const games=[
 
 {
-{
 title:"Basket Random",
 category:"Sports",
-type:"xml",
-file:"data:text/html;charset=utf-8," + encodeURIComponent(`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
-body, html { margin:0; padding:0; height:100%; background:#000; }
-#container { width:100%; height:100%; display:flex; justify-content:center; align-items:center; flex-direction:column; }
-iframe { width:100%; height:100%; border:none; display:none; }
-#button-wrapper { display:flex; flex-direction:column; gap:20px; }
-.play-button {
-padding:18px 40px;
-background:#000;
-color:#fff;
-border:2px solid #4a148c;
-border-radius:10px;
-font:bold 20px Arial;
-cursor:pointer;
-transition:.3s;
-}
-.play-button:hover { background:#4a148c; transform:scale(1.05); }
-</style>
-</head>
-<body>
-
-<div id="container">
-<div id="button-wrapper">
-<button class="play-button" onclick="playOfficial()">PLAY OFFICIAL</button>
-<button class="play-button" onclick="playSchool()">PLAY FOR SCHOOL</button>
-</div>
-<iframe id="gameFrame"></iframe>
-</div>
-
-<script>
-const OFFICIAL_URL="https://www.twoplayergames.org/embed/basket-random";
-const FILE_URL="https://cdn.jsdelivr.net/gh/ragdoi-archers/ishere@main/basrand.xml";
-
-function playOfficial(){
-const frame=document.getElementById("gameFrame");
-frame.src=OFFICIAL_URL;
-frame.style.display="block";
-document.getElementById("button-wrapper").style.display="none";
-}
-
-function playSchool(){
-fetch(FILE_URL)
-.then(r=>r.text())
-.then(t=>{
-const frame=document.getElementById("gameFrame");
-frame.srcdoc=t;
-frame.style.display="block";
-document.getElementById("button-wrapper").style.display="none";
-});
-}
-</script>
-
-</body>
-</html>
-`)
-,
+type:"iframe",
+url:"https://www.twoplayergames.org/embed/basket-random",
 thumb:"https://dummyimage.com/300x170/111/fff&text=Basket+Random"
 },
 
 {
-title:"Geometry Dash Lite",
-category:"Platformer",
-type:"xml",
-file:"https://cdn.jsdelivr.net/gh/papamamia/gonzales@main/StreamingAssets/1.xml",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Geometry+Dash"
-},
-
-{
-title:"FNF",
-category:"Arcade",
-type:"xml",
-file:"https://cdn.jsdelivr.net/gh/kelsimsk/6z6@main/StreamingAssets/9.xml",
-thumb:"https://dummyimage.com/300x170/111/fff&text=FNF"
+title:"Soccer Random",
+category:"Sports",
+type:"iframe",
+url:"https://www.twoplayergames.org/embed/soccer-random",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Soccer+Random"
 },
 
 {
 title:"Smash Karts",
 category:"Multiplayer",
-type:"url",
+type:"iframe",
 url:"https://smashkarts.io",
 thumb:"https://dummyimage.com/300x170/111/fff&text=Smash+Karts"
 },
 
 {
+title:"FNF",
+category:"Arcade",
+type:"iframe",
+url:"https://fnf.kdata1.com/2021/07/fnf-week7/",
+thumb:"https://dummyimage.com/300x170/111/fff&text=FNF"
+},
+
+{
+title:"Geometry Dash",
+category:"Platformer",
+type:"iframe",
+url:"https://geometrydash.io",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Geometry+Dash"
+},
+
+{
 title:"Snow Rider",
 category:"Arcade",
-type:"xml",
-file:"https://cdn.jsdelivr.net/gh/nihathatpsin/a-b-ce@main/77.xml",
+type:"iframe",
+url:"https://ubg365.github.io/snowrider3d/",
 thumb:"https://dummyimage.com/300x170/111/fff&text=Snow+Rider"
 }
 
@@ -362,25 +267,9 @@ renderPopular();
 
 function startGame(){
 const frame=document.getElementById("gameFrame");
-
-if(currentGame.type==="url"){
-// Open in new tab instead of iframe (fixes black screen)
-window.open(currentGame.url, "_blank");
-return;
-}
-
 frame.style.display="block";
 document.querySelector(".play-btn").style.display="none";
-
-if(currentGame.type==="xml"){
-fetch(currentGame.file)
-.then(r=>r.text())
-.then(t=>frame.srcdoc=t);
-}
-}
-
-function goFullscreen(){
-document.getElementById("gameFrame").requestFullscreen();
+frame.src=currentGame.url;
 }
 
 function goHome(){
@@ -388,7 +277,6 @@ document.getElementById("gamePage").classList.add("hidden");
 document.getElementById("homePage").classList.remove("hidden");
 const frame=document.getElementById("gameFrame");
 frame.src="";
-frame.srcdoc="";
 frame.style.display="none";
 }
 
@@ -410,5 +298,3 @@ renderGames();
 
 </body>
 </html>
-
-
