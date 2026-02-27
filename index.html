@@ -1,383 +1,347 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classroom 55X</title>
+<meta charset="UTF-8">
+<title>Classroom 5X</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial;background:#000;color:#fff}
 
-        body {
-            font-family: Arial;
-            background: #000;
-            color: #fff
-        }
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+border-bottom:1px solid #111;
+}
 
-        /* NAVBAR */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #111;
-        }
+.logo{font-size:24px;font-weight:bold}
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold
-        }
+.container{display:flex}
 
-        /* LAYOUT */
-        .container {
-            display: flex
-        }
+.sidebar{
+width:220px;
+background:#000;
+height:100vh;
+position:fixed;
+padding-top:20px;
+border-right:1px solid #111;
+}
 
-        .sidebar {
-            width: 220px;
-            background: #000;
-            height: 100vh;
-            position: fixed;
-            padding-top: 20px;
-            border-right: 1px solid #111;
-        }
+.sidebar ul{list-style:none}
+.sidebar li{
+padding:12px 20px;
+color:#aaa;
+cursor:pointer;
+}
+.sidebar li:hover{
+background:#111;
+color:#fff;
+}
+.sidebar li.active{
+background:#111;
+color:#fff;
+}
 
-            .sidebar ul {
-                list-style: none
-            }
+.main{
+margin-left:220px;
+padding:30px;
+width:100%;
+}
 
-            .sidebar li {
-                padding: 12px 20px;
-                color: #aaa;
-                cursor: pointer;
-                position: relative;
-                transition: .25s ease;
-            }
+/* HOME HERO */
+.home-hero{
+background:#111;
+padding:60px;
+border-radius:12px;
+text-align:center;
+margin-bottom:40px;
+}
 
-                .sidebar li:hover {
-                    background: #111;
-                    color: #fff;
-                }
+.home-hero h1{
+font-size:34px;
+}
 
-                .sidebar li.active {
-                    background: #111;
-                    color: #fff;
-                }
+/* GRID */
+.games{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:20px;
+}
 
-                .sidebar li::after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                    height: 2px;
-                    width: 0%;
-                    background: #e91e63;
-                    transition: .3s;
-                }
+.game-card{
+background:#111;
+border-radius:12px;
+overflow:hidden;
+cursor:pointer;
+transition:.2s;
+}
 
-                .sidebar li:hover::after,
-                .sidebar li.active::after {
-                    width: 100%;
-                }
+.game-card:hover{
+transform:scale(1.05);
+}
 
-        .main {
-            margin-left: 220px;
-            padding: 30px;
-            width: 100%;
-        }
+.game-card img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
 
-        /* HERO */
-        .home-hero {
-            background: #111;
-            padding: 60px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
+.game-card h3{
+padding:10px;
+font-size:14px;
+}
 
-        /* GRID */
-        .games {
-            display: grid;
-            grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
-            gap: 20px;
-        }
+/* GAME PAGE */
 
-        .game-card {
-            background: #111;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: .2s;
-        }
+.hidden{display:none}
 
-            .game-card:hover {
-                transform: scale(1.05)
-            }
+.game-hero{
+height:300px;
+background:linear-gradient(135deg,#4a148c,#e91e63);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+border-radius:12px;
+position:relative;
+text-align:center;
+}
 
-            .game-card img {
-                width: 100%;
-                height: 140px;
-                object-fit: cover;
-            }
+.back-btn{
+position:absolute;
+top:15px;
+left:15px;
+background:#000;
+color:#fff;
+border:1px solid #444;
+padding:6px 12px;
+cursor:pointer;
+border-radius:6px;
+}
 
-            .game-card h3 {
-                padding: 10px;
-                font-size: 14px;
-            }
+.play-btn{
+padding:10px 25px;
+background:#fff;
+color:#000;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin:15px 0;
+font-weight:bold;
+}
 
-        /* GAME PAGE */
-        .game-hero {
-            height: 300px;
-            background: linear-gradient(135deg,#4a148c,#e91e63);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            position: relative;
-            text-align: center;
-        }
+#gameFrame{
+width:100%;
+height:80vh;
+border:none;
+background:#000;
+}
 
-        .back-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #000;
-            color: #fff;
-            border: 1px solid #444;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 6px;
-        }
+.frame-wrapper{
+margin-top:20px;
+position:relative;
+background:#111;
+border-radius:12px;
+overflow:hidden;
+}
 
-        .play-btn {
-            padding: 10px 25px;
-            background: #fff;
-            color: #000;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 15px 0;
-            font-weight: bold;
-        }
+.fullscreen-btn{
+position:absolute;
+bottom:10px;
+right:10px;
+background:#000;
+color:#fff;
+border:1px solid #444;
+padding:6px 10px;
+cursor:pointer;
+border-radius:6px;
+z-index:5;
+}
 
-        .frame-wrapper {
-            margin-top: 20px;
-            position: relative;
-            background: #111;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        #gameFrame {
-            width: 100%;
-            height: 600px;
-            border: none;
-            display: none;
-            background: #000;
-        }
-
-        .fullscreen-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: #000;
-            color: #fff;
-            border: 1px solid #444;
-            padding: 6px 10px;
-            cursor: pointer;
-            border-radius: 6px;
-            z-index: 5;
-        }
-
-        .section-title {
-            margin: 40px 0 20px;
-            font-size: 20px;
-        }
-
-        .hidden {
-            display: none
-        }
-    </style>
+.section-title{
+margin:40px 0 20px;
+font-size:20px;
+}
+</style>
 </head>
-
 <body>
 
-    <div class="navbar">
-        <div class="logo">CLASSROOM 55X</div>
-    </div>
+<div class="navbar">
+<div class="logo">CLASSROOM 5X</div>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="sidebar">
-            <ul>
-                <li class="active" onclick="filterCategory('All', this)">All Games</li>
-                <li onclick="filterCategory('Arcade', this)">Arcade</li>
-                <li onclick="filterCategory('Sports', this)">Sports</li>
-                <li onclick="filterCategory('Platformer', this)">Platformer</li>
-                <li onclick="filterCategory('Multiplayer', this)">Multiplayer</li>
-            </ul>
-        </div>
+<div class="sidebar">
+<ul>
+<li class="active" onclick="filterCategory('All', this)">All Games</li>
+<li onclick="filterCategory('Sports', this)">Sports</li>
+</ul>
+</div>
 
-        <div class="main">
+<div class="main">
 
-            <!-- HOME -->
-            <div id="homePage">
-                <div class="home-hero">
-                    <h1>Classroom 55X – Fun Games To Play</h1>
-                </div>
-                <div class="games" id="gameGrid"></div>
-            </div>
+<!-- HOME -->
+<div id="homePage">
+<div class="home-hero">
+<h1>Classroom 5X – Fun Games To Play</h1>
+</div>
+<div class="games" id="gameGrid"></div>
+</div>
 
-            <!-- GAME PAGE -->
-            <div id="gamePage" class="hidden">
-                <div class="game-hero">
-                    <button class="back-btn" onclick="goHome()">← Back</button>
-                    <h2 id="gameTitle"></h2>
-                    <button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
-                </div>
+<!-- GAME PAGE -->
+<div id="gamePage" class="hidden">
+<div class="game-hero">
+<button class="back-btn" onclick="goHome()">← Back</button>
+<h2 id="gameTitle"></h2>
+<button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
+</div>
 
-                <div class="frame-wrapper">
-                    <iframe id="gameFrame"></iframe>
-                    <button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
-                </div>
+<div class="frame-wrapper">
+<iframe id="gameFrame"></iframe>
+<button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
+</div>
 
-                <div class="section-title">Popular Games</div>
-                <div class="games" id="popularGames"></div>
+</div>
 
-            </div>
-        </div>
-    </div>
+</div>
+</div>
 
-    <script>
+<script>
 
-        /* Clean start fix */
-        window.addEventListener("pageshow", function (e) {
-            if (e.persisted) window.location.reload();
-        });
+const games=[
 
-        const games = [
+{
+title:"Basket Random",
+category:"Sports",
+type:"custom",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Basket+Random",
+custom: `
+<html>
+<head><base target="_blank"></head>
+<body style="margin:0;background:#000;overflow:hidden;">
 
-            {
-                title: "Basket Random",
-                category: "Sports",
-                type: "url",
-                url: "https://basket-random.github.io/",
-                thumb: "https://dummyimage.com/300x170/111/fff&text=Basket+Random"
-            },
+<div style="position:relative;width:100%;height:100vh;">
 
-            {
-                title: "Geometry Dash Lite",
-                category: "Platformer",
-                type: "xml",
-                file: "https://cdn.jsdelivr.net/gh/papamamia/gonzales@main/StreamingAssets/1.xml",
-                thumb: "https://dummyimage.com/300x170/111/fff&text=Geometry+Dash"
-            },
+<iframe id="fr" width="100%" height="100%" frameborder="0" allowfullscreen style="display:none;"></iframe>
 
-            {
-                title: "FNF",
-                category: "Arcade",
-                type: "xml",
-                file: "https://cdn.jsdelivr.net/gh/kelsimsk/6z6@main/StreamingAssets/9.xml",
-                thumb: "https://dummyimage.com/300x170/111/fff&text=FNF"
-            },
+<div id="buttons" style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+display:flex;
+flex-direction:column;
+gap:20px;">
 
-            {
-                title: "Smash Karts",
-                category: "Multiplayer",
-                type: "url",
-                url: "https://smashkarts.io",
-                thumb: "https://dummyimage.com/300x170/111/fff&text=Smash+Karts"
-            },
+<button onclick="PlayOfficial()" style="
+padding:20px 40px;
+background:#000;
+color:#fff;
+border:2px solid #00c853;
+border-radius:10px;
+font:bold 22px Arial;
+cursor:pointer;">
+PLAY OFFICIAL
+</button>
 
-            {
-                title: "Snow Rider",
-                category: "Arcade",
-                type: "xml",
-                file: "https://cdn.jsdelivr.net/gh/nihathatpsin/a-b-ce@main/77.xml",
-                thumb: "https://dummyimage.com/300x170/111/fff&text=Snow+Rider"
-            }
+<button onclick="PlaySchool()" style="
+padding:20px 40px;
+background:#000;
+color:#fff;
+border:2px solid #4a148c;
+border-radius:10px;
+font:bold 22px Arial;
+cursor:pointer;">
+PLAY FOR SCHOOL
+</button>
 
-        ];
+</div>
 
-        let currentGame = null;
+<script>
+const OFFICIAL_URL="https://www.twoplayergames.org/embed/basket-random";
+const FILE_URL="https://cdn.jsdelivr.net/gh/ragdoi-archers/ishere@main/basrand.xml";
 
-        function renderGames(filter = "All") {
-            const grid = document.getElementById("gameGrid");
-            grid.innerHTML = "";
-            games.forEach(g => {
-                if (filter === "All" || g.category === filter) {
-                    let card = document.createElement("div");
-                    card.className = "game-card";
-                    card.onclick = () => openGame(g);
-                    card.innerHTML = `<img src="${g.thumb}"><h3>${g.title}</h3>`;
-                    grid.appendChild(card);
-                }
-            });
-        }
+function PlayOfficial(){
+const iframe=document.getElementById("fr");
+iframe.src=OFFICIAL_URL;
+iframe.style.display="block";
+document.getElementById("buttons").style.display="none";
+}
 
-        function filterCategory(cat, el) {
-            document.querySelectorAll(".sidebar li").forEach(li => li.classList.remove("active"));
-            el.classList.add("active");
-            renderGames(cat);
-        }
+function PlaySchool(){
+fetch(FILE_URL)
+.then(r=>r.text())
+.then(text=>{
+const iframe=document.getElementById("fr");
+iframe.contentDocument.open();
+iframe.contentDocument.write(text);
+iframe.contentDocument.close();
+iframe.style.display="block";
+document.getElementById("buttons").style.display="none";
+});
+}
+</script>
 
-        function openGame(game) {
-            currentGame = game;
-            document.getElementById("homePage").classList.add("hidden");
-            document.getElementById("gamePage").classList.remove("hidden");
-            document.getElementById("gameTitle").innerText = game.title;
-            document.querySelector(".play-btn").style.display = "inline-block";
-            renderPopular();
-        }
+</div>
+</body>
+</html>
+`
+}
 
-        function startGame() {
-            const frame = document.getElementById("gameFrame");
-            frame.style.display = "block";
-            document.querySelector(".play-btn").style.display = "none";
+];
 
-            if (currentGame.type === "url") {
-                frame.src = currentGame.url;
-            }
-            else if (currentGame.type === "xml") {
-                fetch(currentGame.file)
-                    .then(r => r.text())
-                    .then(t => frame.srcdoc = t);
-            }
-        }
+let currentGame=null;
 
-        function goFullscreen() {
-            document.getElementById("gameFrame").requestFullscreen();
-        }
+function renderGames(filter="All"){
+const grid=document.getElementById("gameGrid");
+grid.innerHTML="";
+games.forEach(g=>{
+if(filter==="All"||g.category===filter){
+let card=document.createElement("div");
+card.className="game-card";
+card.onclick=()=>openGame(g);
+card.innerHTML=\`<img src="\${g.thumb}"><h3>\${g.title}</h3>\`;
+grid.appendChild(card);
+}
+});
+}
 
-        function goHome() {
-            document.getElementById("gamePage").classList.add("hidden");
-            document.getElementById("homePage").classList.remove("hidden");
-            const frame = document.getElementById("gameFrame");
-            frame.src = "";
-            frame.srcdoc = "";
-            frame.style.display = "none";
-        }
+function filterCategory(cat, el){
+document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
+el.classList.add("active");
+renderGames(cat);
+}
 
-        function renderPopular() {
-            const pop = document.getElementById("popularGames");
-            pop.innerHTML = "";
-            games.forEach(g => {
-                let card = document.createElement("div");
-                card.className = "game-card";
-                card.onclick = () => openGame(g);
-                card.innerHTML = `<img src="${g.thumb}"><h3>${g.title}</h3>`;
-                pop.appendChild(card);
-            });
-        }
+function openGame(game){
+currentGame=game;
+document.getElementById("homePage").classList.add("hidden");
+document.getElementById("gamePage").classList.remove("hidden");
+document.getElementById("gameTitle").innerText=game.title;
+}
 
-        renderGames();
+function startGame(){
+const frame=document.getElementById("gameFrame");
+if(currentGame.type==="custom"){
+frame.srcdoc=currentGame.custom;
+}
+}
 
-    </script>
+function goFullscreen(){
+document.getElementById("gameFrame").requestFullscreen();
+}
+
+function goHome(){
+document.getElementById("gamePage").classList.add("hidden");
+document.getElementById("homePage").classList.remove("hidden");
+document.getElementById("gameFrame").src="";
+}
+
+renderGames();
+
+</script>
 
 </body>
 </html>
