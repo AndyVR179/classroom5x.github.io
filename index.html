@@ -5,158 +5,152 @@
 <title>Classroom 55X</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial;background:#000;color:#fff}
-.navbar{padding:20px;border-bottom:1px solid #111;font-size:24px;font-weight:bold;}
-.container{display:flex}
-.sidebar{width:220px;background:#000;height:100vh;position:fixed;padding-top:20px;border-right:1px solid #111;}
-.sidebar ul{list-style:none}
-.sidebar li{padding:12px 20px;color:#aaa;cursor:pointer;}
-.sidebar li:hover{background:#111;color:#fff;}
-.sidebar li.active{background:#111;color:#fff;}
-.main{margin-left:220px;padding:30px;width:100%;}
-.home-hero{background:#111;padding:60px;border-radius:12px;text-align:center;margin-bottom:40px;font-size:30px;}
-.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px;}
-.game-card{background:#111;border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s;}
-.game-card:hover{transform:scale(1.05);}
-.game-card img{width:100%;height:140px;object-fit:cover;}
-.game-card h3{padding:10px;font-size:14px;}
-.hidden{display:none}
-#gameFrame{width:100%;height:80vh;border:none;margin-top:20px;background:#000;}
-.back-btn{background:#000;color:#fff;border:1px solid #444;padding:6px 12px;margin-bottom:10px;cursor:pointer;}
+body{
+margin:0;
+font-family:Arial;
+background:#000;
+color:#fff;
+text-align:center;
+}
+
+h1{
+padding:30px 0;
+font-size:40px;
+}
+
+.games{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:20px;
+max-width:1000px;
+margin:auto;
+}
+
+.game{
+background:#111;
+border-radius:15px;
+overflow:hidden;
+cursor:pointer;
+transition:0.2s;
+}
+
+.game:hover{
+transform:scale(1.05);
+}
+
+.game img{
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+.game h3{
+padding:10px;
+}
+
+#gamePage{
+display:none;
+padding:20px;
+}
+
+iframe{
+width:100%;
+height:90vh;
+border:none;
+}
+
+button{
+padding:10px 20px;
+margin-bottom:15px;
+background:#111;
+color:white;
+border:1px solid #444;
+cursor:pointer;
+}
+
+button:hover{
+background:#222;
+}
 </style>
 </head>
 
 <body>
 
-<div class="navbar">CLASSROOM 55X</div>
+<h1>Classroom 55X fun games to play</h1>
 
-<div class="container">
+<div id="homePage" class="games"></div>
 
-<div class="sidebar">
-<ul>
-<li class="active" onclick="filterCategory('All', this)">All Games</li>
-<li onclick="filterCategory('Sports', this)">Sports</li>
-<li onclick="filterCategory('Action', this)">Action</li>
-<li onclick="filterCategory('Arcade', this)">Arcade</li>
-<li onclick="filterCategory('Multiplayer', this)">Multiplayer</li>
-</ul>
-</div>
-
-<div class="main">
-
-<div id="homePage">
-<div class="home-hero">
-Classroom 55X fun games to play
-</div>
-<div class="games" id="gamesGrid"></div>
-</div>
-
-<div id="gamePage" class="hidden">
-<button class="back-btn" onclick="goHome()">Back</button>
+<div id="gamePage">
+<button onclick="goHome()">⬅ Back</button>
 <h2 id="gameTitle"></h2>
 <iframe id="gameFrame" allowfullscreen></iframe>
 </div>
 
-</div>
-</div>
-
 <script>
+
 const games = [
 
-/* KEEP */
 {
 title:"Basket Random",
-category:"Sports",
 url:"https://www.twoplayergames.org/embed/basket-random",
-thumb:"https://dummyimage.com/300x170/222/fff&text=Basket+Random"
+img:"https://dummyimage.com/400x200/222/fff&text=Basket+Random"
 },
 {
 title:"Soccer Random",
-category:"Sports",
 url:"https://www.twoplayergames.org/embed/soccer-random",
-thumb:"https://dummyimage.com/300x170/666/fff&text=Soccer+Random"
+img:"https://dummyimage.com/400x200/444/fff&text=Soccer+Random"
 },
 {
 title:"Smash Karts",
-category:"Multiplayer",
 url:"https://smashkarts.io",
-thumb:"https://dummyimage.com/300x170/333/fff&text=Smash+Karts"
+img:"https://dummyimage.com/400x200/333/fff&text=Smash+Karts"
 },
-
-/* OLD CLASSROOM GAMES */
 {
 title:"Friday Night Funkin",
-category:"Arcade",
 url:"https://fnf.kdata1.com/2021/07/fnf-week7/",
-thumb:"https://dummyimage.com/300x170/990000/fff&text=FNF"
+img:"https://dummyimage.com/400x200/990000/fff&text=FNF"
 },
 {
-title:"Tunnel Rush",
-category:"Arcade",
-url:"https://ubg365.github.io/tunnelrush/",
-thumb:"https://dummyimage.com/300x170/0055ff/fff&text=Tunnel+Rush"
-},
-{
-title:"Retro Bowl",
-category:"Sports",
-url:"https://ubg365.github.io/retrobowl/",
-thumb:"https://dummyimage.com/300x170/008800/fff&text=Retro+Bowl"
+title:"Geometry Dash",
+url:"https://geometrydash.io",
+img:"https://dummyimage.com/400x200/00aa00/fff&text=Geometry+Dash"
 },
 {
 title:"Snow Rider 3D",
-category:"Arcade",
 url:"https://ubg365.github.io/snowrider3d/",
-thumb:"https://dummyimage.com/300x170/00bbbb/fff&text=Snow+Rider"
-},
-{
-title:"Run 3",
-category:"Action",
-url:"https://run3.io",
-thumb:"https://dummyimage.com/300x170/5500aa/fff&text=Run+3"
+img:"https://dummyimage.com/400x200/00bbbb/fff&text=Snow+Rider"
 }
+
 ];
 
-let currentGame=null;
+const home = document.getElementById("homePage");
 
-function renderGames(category="All"){
-const grid=document.getElementById("gamesGrid");
-grid.innerHTML="";
 games.forEach(game=>{
-if(category==="All"||game.category===category){
-const card=document.createElement("div");
-card.className="game-card";
-card.innerHTML=`
-<img src="${game.thumb}">
+const div = document.createElement("div");
+div.className="game";
+div.innerHTML=`
+<img src="${game.img}">
 <h3>${game.title}</h3>
 `;
-card.onclick=()=>openGame(game);
-grid.appendChild(card);
-}
+div.onclick=()=>openGame(game);
+home.appendChild(div);
 });
-}
-
-function filterCategory(category,el){
-document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
-el.classList.add("active");
-renderGames(category);
-}
 
 function openGame(game){
-currentGame=game;
-document.getElementById("homePage").classList.add("hidden");
-document.getElementById("gamePage").classList.remove("hidden");
+document.getElementById("homePage").style.display="none";
+document.getElementById("gamePage").style.display="block";
 document.getElementById("gameTitle").innerText=game.title;
 document.getElementById("gameFrame").src=game.url;
+window.scrollTo(0,0);
 }
 
 function goHome(){
 document.getElementById("gameFrame").src="";
-document.getElementById("gamePage").classList.add("hidden");
-document.getElementById("homePage").classList.remove("hidden");
+document.getElementById("gamePage").style.display="none";
+document.getElementById("homePage").style.display="grid";
 }
 
-renderGames();
 </script>
 
 </body>
