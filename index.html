@@ -1,81 +1,344 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Game Site</title>
+<title>Classroom 55X</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial;background:#000;color:#fff}
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+border-bottom:1px solid #111;
+}
+.logo{font-size:24px;font-weight:bold}
+
+.container{display:flex}
+
+.sidebar{
+width:220px;
+background:#000;
+height:100vh;
+position:fixed;
+padding-top:20px;
+border-right:1px solid #111;
+}
+.sidebar ul{list-style:none}
+.sidebar li{
+padding:12px 20px;
+color:#aaa;
+cursor:pointer;
+transition:.25s;
+}
+.sidebar li:hover,
+.sidebar li.active{
+background:#111;
+color:#fff;
 }
 
-h1 {
-    text-align: center;
-    padding: 20px;
+.main{
+margin-left:220px;
+padding:30px;
+width:100%;
 }
 
-.game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
+.home-hero{
+background:#111;
+padding:60px;
+border-radius:12px;
+text-align:center;
+margin-bottom:40px;
 }
 
-.game-card {
-    background: #1c1c1c;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: 0.3s;
-    cursor: pointer;
-    text-align: center;
+.games{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:20px;
 }
 
-.game-card:hover {
-    transform: scale(1.05);
+.game-card{
+background:#111;
+border-radius:12px;
+overflow:hidden;
+cursor:pointer;
+transition:.2s;
+}
+.game-card:hover{transform:scale(1.05)}
+.game-card img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
+.game-card h3{
+padding:10px;
+font-size:14px;
 }
 
-.game-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
+.hidden{display:none}
+
+.game-hero{
+height:250px;
+background:linear-gradient(135deg,#4a148c,#e91e63);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+border-radius:12px;
+position:relative;
+text-align:center;
 }
 
-.game-card h3 {
-    padding: 10px;
-    margin: 0;
+.back-btn{
+position:absolute;
+top:15px;
+left:15px;
+background:#000;
+color:#fff;
+border:1px solid #444;
+padding:6px 12px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.play-btn{
+padding:10px 25px;
+background:#fff;
+color:#000;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:15px;
+font-weight:bold;
+}
+
+.frame-wrapper{
+position:relative;
+margin-top:20px;
+}
+
+#gameFrame{
+width:100%;
+height:600px;
+border:none;
+display:none;
+background:#000;
+}
+
+.fullscreen-btn{
+position:absolute;
+bottom:10px;
+right:10px;
+background:#000;
+color:#fff;
+border:1px solid #444;
+padding:6px 10px;
+cursor:pointer;
+border-radius:6px;
+z-index:5;
+}
+
+.section-title{
+margin:40px 0 20px;
+font-size:20px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>My Games</h1>
+<div class="navbar">
+<div class="logo">CLASSROOM 55X</div>
+</div>
 
-<div class="game-grid">
+<div class="container">
 
-    <!-- Geometry Dash -->
-    <div class="game-card" onclick="location.href='geometry-dash.html'">
-        <img src="geometry-dash.jpg" alt="Geometry Dash">
-        <h3>Geometry Dash</h3>
-    </div>
+<div class="sidebar">
+<ul>
+<li class="active" onclick="filterCategory('All', this)">All Games</li>
+<li onclick="filterCategory('Arcade', this)">Arcade</li>
+<li onclick="filterCategory('Sports', this)">Sports</li>
+<li onclick="filterCategory('Platformer', this)">Platformer</li>
+<li onclick="filterCategory('Multiplayer', this)">Multiplayer</li>
+</ul>
+</div>
 
-    <!-- Basket Random -->
-    <div class="game-card" onclick="location.href='basket-random.html'">
-        <img src="https://jasongamesdev.github.io/basket-random/basket-random.png" alt="Basket Random">
-        <h3>Basket Random</h3>
-    </div>
+<div class="main">
 
-    <!-- Thorn and Balloons -->
-    <div class="game-card" onclick="location.href='thorn-and-balloons.html'">
-        <img src="https://jasongamesdev.github.io/thorn-and-balloons/thorn-and-balloons.png" alt="Thorn and Balloons">
-        <h3>Thorn and Balloons</h3>
-    </div>
+<div id="homePage">
+<div class="home-hero">
+<h1>Classroom 55X – Fun Games To Play</h1>
+</div>
+<div class="games" id="gameGrid"></div>
+</div>
+
+<div id="gamePage" class="hidden">
+<div class="game-hero">
+<button class="back-btn" onclick="goHome()">← Back</button>
+<h2 id="gameTitle"></h2>
+<button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
+</div>
+
+<div class="frame-wrapper">
+<iframe id="gameFrame"></iframe>
+<button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
+</div>
+
+<div class="section-title">Popular Games</div>
+<div class="games" id="popularGames"></div>
+</div>
 
 </div>
+</div>
+
+<script>
+
+const games=[
+
+{
+title:"Basket Random",
+category:"Sports",
+type:"iframe",
+url:"https://www.twoplayergames.org/embed/basket-random",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Basket+Random"
+},
+
+{
+title:"Soccer Random",
+category:"Sports",
+type:"iframe",
+url:"https://www.twoplayergames.org/embed/soccer-random",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Soccer+Random"
+},
+
+{
+title:"Smash Karts",
+category:"Multiplayer",
+type:"xml",
+file:"https://cdn.jsdelivr.net/gh/your-old-source/smash.xml",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Smash+Karts"
+},
+
+{
+title:"FNF",
+category:"Arcade",
+type:"xml",
+file:"https://cdn.jsdelivr.net/gh/kelsimsk/6z6@main/StreamingAssets/9.xml",
+thumb:"https://dummyimage.com/300x170/111/fff&text=FNF"
+},
+
+{
+title:"Geometry Dash",
+category:"Platformer",
+type:"xml",
+file:"https://cdn.jsdelivr.net/gh/papamamia/gonzales@main/StreamingAssets/1.xml",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Geometry+Dash"
+},
+
+{
+title:"Snow Rider",
+category:"Arcade",
+type:"xml",
+file:"https://cdn.jsdelivr.net/gh/nihathatpsin/a-b-ce@main/77.xml",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Snow+Rider"
+},
+
+{
+title:"Smash Karts",
+category:"Multiplayer",
+type:"iframe",
+url:"https://script.google.com/macros/s/AKfycbx63iRe5mtf5PQGIn_eGwKePxCA1iU6w-YApn57Mh4phi2ZB-G-GCJA1YTV9jKrwoqb/exec",
+thumb:"https://dummyimage.com/300x170/111/fff&text=Smash+Karts"
+},
+
+{
+title:"Thorn And Balloons",
+category:"Arcade",
+type:"iframe",
+url:"https://jasongamesdev.github.io/thorn-and-balloons/",
+thumb:"https://jasongamesdev.github.io/thorn-and-balloons/thorn-and-balloons.png"
+}
+
+];
+
+let currentGame=null;
+
+function renderGames(filter="All"){
+const grid=document.getElementById("gameGrid");
+grid.innerHTML="";
+games.forEach(g=>{
+if(filter==="All"||g.category===filter){
+let card=document.createElement("div");
+card.className="game-card";
+card.onclick=()=>openGame(g);
+card.innerHTML=`<img src="${g.thumb}"><h3>${g.title}</h3>`;
+grid.appendChild(card);
+}
+});
+}
+
+function filterCategory(cat,el){
+document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
+el.classList.add("active");
+renderGames(cat);
+}
+
+function openGame(game){
+currentGame=game;
+document.getElementById("homePage").classList.add("hidden");
+document.getElementById("gamePage").classList.remove("hidden");
+document.getElementById("gameTitle").innerText=game.title;
+document.querySelector(".play-btn").style.display="inline-block";
+renderPopular();
+}
+
+function startGame(){
+const frame=document.getElementById("gameFrame");
+frame.style.display="block";
+document.querySelector(".play-btn").style.display="none";
+
+if(currentGame.type==="iframe"){
+frame.src=currentGame.url;
+}
+else if(currentGame.type==="xml"){
+fetch(currentGame.file)
+.then(r=>r.text())
+.then(t=>frame.srcdoc=t);
+}
+}
+
+function goFullscreen(){
+document.getElementById("gameFrame").requestFullscreen();
+}
+
+function goHome(){
+document.getElementById("gamePage").classList.add("hidden");
+document.getElementById("homePage").classList.remove("hidden");
+const frame=document.getElementById("gameFrame");
+frame.src="";
+frame.srcdoc="";
+frame.style.display="none";
+}
+
+function renderPopular(){
+const pop=document.getElementById("popularGames");
+pop.innerHTML="";
+games.forEach(g=>{
+let card=document.createElement("div");
+card.className="game-card";
+card.onclick=()=>openGame(g);
+card.innerHTML=`<img src="${g.thumb}"><h3>${g.title}</h3>`;
+pop.appendChild(card);
+});
+}
+
+renderGames();
+
+</script>
 
 </body>
 </html>
