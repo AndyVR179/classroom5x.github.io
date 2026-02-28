@@ -153,6 +153,15 @@ font-size:20px;
 
 <div class="navbar">
 <div class="logo">CLASSROOM 55X</div>
+
+<input 
+type="text" 
+id="searchBar" 
+placeholder="Search games..."
+onkeyup="searchGames()" 
+style="padding:8px 12px;border-radius:6px;border:1px solid #333;background:#111;color:#fff;width:220px;"
+>
+
 </div>
 
 <div class="container">
@@ -203,8 +212,8 @@ const games=[
 title:"Basket Random",
 category:"Sports",
 type:"iframe",
-url:"https://www.twoplayergames.org/embed/basket-random",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Basket+Random"
+url:"https://jasongamesdev.github.io/basket-random/",
+thumb:"https://jasongamesdev.github.io/basket-random/basket-random.png"
 },
 
 {
@@ -219,16 +228,16 @@ thumb:"https://dummyimage.com/300x170/111/fff&text=Soccer+Random"
 title:"Smash Karts",
 category:"Multiplayer",
 type:"iframe",
-url:"https://script.google.com/macros/s/AKfycbx63iRe5mtf5PQGIn_eGwKePxCA1iU6w-YApn57Mh4phi2ZB-G-GCJA1YTV9jKrwoqb/exec",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Smash+Karts"
+url:"https://jasongamesdev.github.io/smash-karts/",
+thumb:"https://jasongamesdev.github.io/smash-karts/smash-karts.png"
 },
 
 {
-title:"FNF",
+title:"Friday Night Funkin",
 category:"Arcade",
-type:"xml",
-file:"https://cdn.jsdelivr.net/gh/kelsimsk/6z6@main/StreamingAssets/9.xml",
-thumb:"https://dummyimage.com/300x170/111/fff&text=FNF"
+type:"iframe",
+url:"https://jasongamesdev.github.io/friday-night-funkin/",
+thumb:"https://jasongamesdev.github.io/friday-night-funkin/friday-night-funkin.png"
 },
 
 {
@@ -240,11 +249,11 @@ thumb:"https://dummyimage.com/300x170/111/fff&text=Geometry+Dash"
 },
 
 {
-title:"Snow Rider",
+title:"Snow Rider 3D",
 category:"Arcade",
-type:"xml",
-file:"https://cdn.jsdelivr.net/gh/nihathatpsin/a-b-ce@main/77.xml",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Snow+Rider"
+type:"iframe",
+url:"https://jasongamesdev.github.io/snow-rider3d/",
+thumb:"https://jasongamesdev.github.io/snow-rider3d/snow-rider3d.png"
 },
 
 {
@@ -272,6 +281,22 @@ const grid=document.getElementById("gameGrid");
 grid.innerHTML="";
 games.forEach(g=>{
 if(filter==="All"||g.category===filter){
+let card=document.createElement("div");
+card.className="game-card";
+card.onclick=()=>openGame(g);
+card.innerHTML=`<img src="${g.thumb}"><h3>${g.title}</h3>`;
+grid.appendChild(card);
+}
+});
+}
+
+function searchGames(){
+const input=document.getElementById("searchBar").value.toLowerCase();
+const grid=document.getElementById("gameGrid");
+grid.innerHTML="";
+
+games.forEach(g=>{
+if(g.title.toLowerCase().includes(input)){
 let card=document.createElement("div");
 card.className="game-card";
 card.onclick=()=>openGame(g);
@@ -342,4 +367,5 @@ renderGames();
 
 </body>
 </html>
+
 
