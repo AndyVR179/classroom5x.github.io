@@ -77,28 +77,6 @@ margin-bottom:40px;
 border:1px solid #222;
 }
 
-.hot-tags{
-margin-bottom:25px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.hot-tags span{
-background:#181818;
-padding:8px 14px;
-border-radius:20px;
-cursor:pointer;
-font-size:13px;
-border:1px solid #222;
-transition:.2s;
-}
-
-.hot-tags span:hover{
-background:#fff;
-color:#000;
-}
-
 .section-title{
 margin:40px 0 20px;
 font-size:20px;
@@ -197,6 +175,16 @@ cursor:pointer;
 border-radius:6px;
 z-index:5;
 }
+
+.hot-badge{
+position:absolute;
+top:8px;
+left:8px;
+background:red;
+padding:4px 8px;
+border-radius:6px;
+font-size:10px;
+}
 </style>
 </head>
 
@@ -225,14 +213,6 @@ z-index:5;
 
 <div class="home-hero">
 <h1>Classroom 55X – Trending Games</h1>
-</div>
-
-<div class="hot-tags">
-<span onclick="filterCategory('All', this)">🔥 All</span>
-<span onclick="filterCategory('Arcade', this)">🎮 Arcade</span>
-<span onclick="filterCategory('Sports', this)">🏀 Sports</span>
-<span onclick="filterCategory('Multiplayer', this)">🌍 Multiplayer</span>
-<span onclick="filterCategory('Platformer', this)">🕹 Platformer</span>
 </div>
 
 <div class="section-title">Trending</div>
@@ -298,6 +278,15 @@ thumb:"https://jasongamesdev.github.io/friday-night-funkin/friday-night-funkin.p
 },
 
 {
+title:"FNAF 2",
+category:"Arcade",
+type:"iframe",
+url:"https://jasongamesdev.github.io/fnaf-2/",
+thumb:"https://jasongamesdev.github.io/fnaf-2/fnaf-2.png",
+hot:true
+},
+
+{
 title:"Geometry Dash",
 category:"Platformer",
 type:"xml",
@@ -310,8 +299,7 @@ title:"Snow Rider 3D",
 category:"Arcade",
 type:"iframe",
 url:"https://jasongamesdev.github.io/snow-rider3d/",
-thumb:"https://jasongamesdev.github.io/snow-rider3d/snow-rider3d.png",
-hot:true
+thumb:"https://jasongamesdev.github.io/snow-rider3d/snow-rider3d.png"
 },
 
 {
@@ -350,7 +338,7 @@ card.className="game-card";
 card.onclick=()=>openGame(g);
 card.innerHTML=`
 <div style="position:relative">
-${g.hot ? '<div style="position:absolute;top:8px;left:8px;background:red;padding:4px 8px;border-radius:6px;font-size:10px;">HOT</div>' : ''}
+${g.hot ? '<div class="hot-badge">HOT</div>' : ''}
 <img src="${g.thumb}">
 </div>
 <h3>${g.title}</h3>
