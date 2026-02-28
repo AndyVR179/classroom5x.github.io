@@ -7,37 +7,58 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial;background:#000;color:#fff}
+body{
+font-family:Arial;
+background:#0f0f0f;
+color:#fff;
+}
 
 .navbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px;
-border-bottom:1px solid #111;
+padding:18px 30px;
+background:#111;
+border-bottom:1px solid #222;
+position:sticky;
+top:0;
+z-index:10;
 }
-.logo{font-size:24px;font-weight:bold}
+
+.logo{font-size:22px;font-weight:bold}
+
+#searchBar{
+padding:8px 12px;
+border-radius:6px;
+border:1px solid #333;
+background:#181818;
+color:#fff;
+width:220px;
+}
 
 .container{display:flex}
 
 .sidebar{
 width:220px;
-background:#000;
+background:#111;
 height:100vh;
 position:fixed;
 padding-top:20px;
-border-right:1px solid #111;
+border-right:1px solid #222;
 }
+
 .sidebar ul{list-style:none}
+
 .sidebar li{
 padding:12px 20px;
 color:#aaa;
 cursor:pointer;
 transition:.25s;
 }
+
 .sidebar li:hover,
 .sidebar li.active{
-background:#111;
+background:#1c1c1c;
 color:#fff;
 }
 
@@ -48,11 +69,39 @@ width:100%;
 }
 
 .home-hero{
-background:#111;
+background:#181818;
 padding:60px;
-border-radius:12px;
+border-radius:14px;
 text-align:center;
 margin-bottom:40px;
+border:1px solid #222;
+}
+
+.hot-tags{
+margin-bottom:25px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.hot-tags span{
+background:#181818;
+padding:8px 14px;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+border:1px solid #222;
+transition:.2s;
+}
+
+.hot-tags span:hover{
+background:#fff;
+color:#000;
+}
+
+.section-title{
+margin:40px 0 20px;
+font-size:20px;
 }
 
 .games{
@@ -62,18 +111,25 @@ gap:20px;
 }
 
 .game-card{
-background:#111;
-border-radius:12px;
+background:#181818;
+border-radius:14px;
 overflow:hidden;
 cursor:pointer;
 transition:.2s;
+border:1px solid #222;
 }
-.game-card:hover{transform:scale(1.05)}
+
+.game-card:hover{
+transform:translateY(-6px);
+border-color:#444;
+}
+
 .game-card img{
 width:100%;
 height:140px;
 object-fit:cover;
 }
+
 .game-card h3{
 padding:10px;
 font-size:14px;
@@ -141,11 +197,6 @@ cursor:pointer;
 border-radius:6px;
 z-index:5;
 }
-
-.section-title{
-margin:40px 0 20px;
-font-size:20px;
-}
 </style>
 </head>
 
@@ -153,15 +204,7 @@ font-size:20px;
 
 <div class="navbar">
 <div class="logo">CLASSROOM 55X</div>
-
-<input 
-type="text" 
-id="searchBar" 
-placeholder="Search games..."
-onkeyup="searchGames()" 
-style="padding:8px 12px;border-radius:6px;border:1px solid #333;background:#111;color:#fff;width:220px;"
->
-
+<input type="text" id="searchBar" placeholder="Search games..." onkeyup="searchGames()">
 </div>
 
 <div class="container">
@@ -179,10 +222,25 @@ style="padding:8px 12px;border-radius:6px;border:1px solid #333;background:#111;
 <div class="main">
 
 <div id="homePage">
+
 <div class="home-hero">
-<h1>Classroom 55X – Fun Games To Play</h1>
+<h1>Classroom 55X – Trending Games</h1>
 </div>
+
+<div class="hot-tags">
+<span onclick="filterCategory('All', this)">🔥 All</span>
+<span onclick="filterCategory('Arcade', this)">🎮 Arcade</span>
+<span onclick="filterCategory('Sports', this)">🏀 Sports</span>
+<span onclick="filterCategory('Multiplayer', this)">🌍 Multiplayer</span>
+<span onclick="filterCategory('Platformer', this)">🕹 Platformer</span>
+</div>
+
+<div class="section-title">Trending</div>
+<div class="games" id="trendingGames"></div>
+
+<div class="section-title">All Games</div>
 <div class="games" id="gameGrid"></div>
+
 </div>
 
 <div id="gamePage" class="hidden">
@@ -196,9 +254,6 @@ style="padding:8px 12px;border-radius:6px;border:1px solid #333;background:#111;
 <iframe id="gameFrame"></iframe>
 <button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
 </div>
-
-<div class="section-title">Popular Games</div>
-<div class="games" id="popularGames"></div>
 </div>
 
 </div>
@@ -213,7 +268,8 @@ title:"Basket Random",
 category:"Sports",
 type:"iframe",
 url:"https://jasongamesdev.github.io/basket-random/",
-thumb:"https://jasongamesdev.github.io/basket-random/basket-random.png"
+thumb:"https://jasongamesdev.github.io/basket-random/basket-random.png",
+hot:true
 },
 
 {
@@ -229,7 +285,8 @@ title:"Smash Karts",
 category:"Multiplayer",
 type:"iframe",
 url:"https://jasongamesdev.github.io/smash-karts/",
-thumb:"https://jasongamesdev.github.io/smash-karts/smash-karts.png"
+thumb:"https://jasongamesdev.github.io/smash-karts/smash-karts.png",
+hot:true
 },
 
 {
@@ -253,7 +310,8 @@ title:"Snow Rider 3D",
 category:"Arcade",
 type:"iframe",
 url:"https://jasongamesdev.github.io/snow-rider3d/",
-thumb:"https://jasongamesdev.github.io/snow-rider3d/snow-rider3d.png"
+thumb:"https://jasongamesdev.github.io/snow-rider3d/snow-rider3d.png",
+hot:true
 },
 
 {
@@ -262,14 +320,6 @@ category:"Arcade",
 type:"iframe",
 url:"https://jasongamesdev.github.io/thorn-and-balloons/",
 thumb:"https://jasongamesdev.github.io/thorn-and-balloons/thorn-and-balloons.png"
-},
-
-{
-title:"FNAF 2",
-category:"Arcade",
-type:"iframe",
-url:"https://jasongamesdev.github.io/fnaf-2/",
-thumb:"https://jasongamesdev.github.io/fnaf-2/fnaf-2.png"
 }
 
 ];
@@ -281,34 +331,47 @@ const grid=document.getElementById("gameGrid");
 grid.innerHTML="";
 games.forEach(g=>{
 if(filter==="All"||g.category===filter){
+createCard(g,grid);
+}
+});
+}
+
+function renderTrending(){
+const trending=document.getElementById("trendingGames");
+trending.innerHTML="";
+games.filter(g=>g.hot).forEach(g=>{
+createCard(g,trending);
+});
+}
+
+function createCard(g,container){
 let card=document.createElement("div");
 card.className="game-card";
 card.onclick=()=>openGame(g);
-card.innerHTML=`<img src="${g.thumb}"><h3>${g.title}</h3>`;
-grid.appendChild(card);
-}
-});
+card.innerHTML=`
+<div style="position:relative">
+${g.hot ? '<div style="position:absolute;top:8px;left:8px;background:red;padding:4px 8px;border-radius:6px;font-size:10px;">HOT</div>' : ''}
+<img src="${g.thumb}">
+</div>
+<h3>${g.title}</h3>
+`;
+container.appendChild(card);
 }
 
 function searchGames(){
 const input=document.getElementById("searchBar").value.toLowerCase();
 const grid=document.getElementById("gameGrid");
 grid.innerHTML="";
-
 games.forEach(g=>{
 if(g.title.toLowerCase().includes(input)){
-let card=document.createElement("div");
-card.className="game-card";
-card.onclick=()=>openGame(g);
-card.innerHTML=`<img src="${g.thumb}"><h3>${g.title}</h3>`;
-grid.appendChild(card);
+createCard(g,grid);
 }
 });
 }
 
 function filterCategory(cat,el){
 document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
-el.classList.add("active");
+if(el) el.classList.add("active");
 renderGames(cat);
 }
 
@@ -318,7 +381,6 @@ document.getElementById("homePage").classList.add("hidden");
 document.getElementById("gamePage").classList.remove("hidden");
 document.getElementById("gameTitle").innerText=game.title;
 document.querySelector(".play-btn").style.display="inline-block";
-renderPopular();
 }
 
 function startGame(){
@@ -328,11 +390,8 @@ document.querySelector(".play-btn").style.display="none";
 
 if(currentGame.type==="iframe"){
 frame.src=currentGame.url;
-}
-else if(currentGame.type==="xml"){
-fetch(currentGame.file)
-.then(r=>r.text())
-.then(t=>frame.srcdoc=t);
+}else{
+fetch(currentGame.file).then(r=>r.text()).then(t=>frame.srcdoc=t);
 }
 }
 
@@ -349,23 +408,10 @@ frame.srcdoc="";
 frame.style.display="none";
 }
 
-function renderPopular(){
-const pop=document.getElementById("popularGames");
-pop.innerHTML="";
-games.forEach(g=>{
-let card=document.createElement("div");
-card.className="game-card";
-card.onclick=()=>openGame(g);
-card.innerHTML=`<img src="${g.thumb}"><h3>${g.title}</h3>`;
-pop.appendChild(card);
-});
-}
-
 renderGames();
+renderTrending();
 
 </script>
 
 </body>
 </html>
-
-
