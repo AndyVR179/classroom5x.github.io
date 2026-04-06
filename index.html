@@ -5,414 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Classroom 55X</title>
 <link rel="icon" type="image/png" href="https://ssl.gstatic.com/classroom/favicon.png">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial;background:#f5f5f5;color:#333;}
-
-/* ── LEARN SITE ── */
-.learn-nav{
-  display:flex;align-items:center;gap:0;
-  background:#1a73e8;padding:0 30px;
-  box-shadow:0 2px 6px rgba(0,0,0,.2);
-}
-.learn-nav .brand{
-  font-size:20px;font-weight:bold;color:#fff;
-  padding:18px 20px 18px 0;margin-right:20px;
-  border-right:1px solid rgba(255,255,255,.3);
-}
-.learn-nav .tab{
-  padding:18px 22px;color:rgba(255,255,255,.8);
-  cursor:pointer;font-size:15px;transition:.2s;
-  border-bottom:3px solid transparent;
-}
-.learn-nav .tab:hover{color:#fff;background:rgba(255,255,255,.1);}
-.learn-nav .tab.active{color:#fff;border-bottom:3px solid #fff;}
-
-.learn-main{max-width:860px;margin:40px auto;padding:0 20px 60px;}
-
-.subject-hero{
-  background:#fff;border-radius:12px;
-  padding:36px 40px;margin-bottom:30px;
-  box-shadow:0 1px 4px rgba(0,0,0,.1);
-  border-left:6px solid #1a73e8;
-}
-.subject-hero h1{font-size:26px;margin-bottom:8px;color:#1a73e8;}
-.subject-hero p{color:#666;font-size:15px;}
-
-.question-card{
-  background:#fff;border-radius:10px;
-  padding:24px 28px;margin-bottom:18px;
-  box-shadow:0 1px 3px rgba(0,0,0,.08);
-}
-.question-card .q-num{font-size:12px;color:#999;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;}
-.question-card .q-text{font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.5;}
-.options label{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;border-radius:7px;margin-bottom:8px;
-  cursor:pointer;border:1px solid #e0e0e0;transition:.15s;font-size:15px;
-}
-.options label:hover{background:#f0f4ff;border-color:#1a73e8;}
-.options input[type=radio]{accent-color:#1a73e8;}
-.check-btn{
-  margin-top:14px;padding:9px 22px;
-  background:#1a73e8;color:#fff;border:none;
-  border-radius:7px;cursor:pointer;font-size:14px;font-weight:600;
-  transition:.2s;
-}
-.check-btn:hover{background:#1558b0;}
-.result{margin-top:10px;font-size:14px;font-weight:600;display:none;}
-.result.correct{color:#1e8e3e;}
-.result.wrong{color:#d93025;}
-
-/* ── SECRET BUTTON ── */
-#secretBtn{
-  position:fixed;bottom:18px;right:18px;
-  width:18px;height:18px;
-  background:rgba(0,0,0,.08);
-  border:none;border-radius:50%;
-  cursor:pointer;z-index:9999;
-  transition:.2s;
-}
-#secretBtn:hover{background:rgba(0,0,0,.18);}
-
-/* ── GAMES SITE ── */
-#gamesSite{display:none;background:#0f0f0f;min-height:100vh;}
-
-.navbar{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 30px;background:#111;
-  border-bottom:1px solid #222;position:sticky;top:0;z-index:10;
-}
-.logo{font-size:22px;font-weight:bold;color:#fff;}
-#searchBar{
-  padding:8px 12px;border-radius:6px;
-  border:1px solid #333;background:#181818;color:#fff;width:220px;
-}
+body{font-family:Arial;background:#0f0f0f;color:#fff;}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:18px 30px;background:#111;border-bottom:1px solid #222;position:sticky;top:0;z-index:10;}
+.logo{font-size:22px;font-weight:bold;}
+#searchBar{padding:8px 12px;border-radius:6px;border:1px solid #333;background:#181818;color:#fff;width:220px;}
 .container{display:flex;}
-.sidebar{
-  width:220px;background:#111;height:100vh;
-  position:fixed;padding-top:20px;border-right:1px solid #222;
-}
+.sidebar{width:220px;background:#111;height:100vh;position:fixed;padding-top:20px;border-right:1px solid #222;}
 .sidebar ul{list-style:none;}
 .sidebar li{padding:12px 20px;color:#aaa;cursor:pointer;transition:.25s;}
 .sidebar li:hover,.sidebar li.active{background:#1c1c1c;color:#fff;}
 .main{margin-left:220px;padding:30px;width:100%;}
-.home-hero{
-  background:#181818;padding:60px;border-radius:14px;
-  text-align:center;margin-bottom:40px;border:1px solid #222;color:#fff;
-}
-.section-title{margin:40px 0 20px;font-size:20px;color:#fff;}
+.home-hero{background:#181818;padding:60px;border-radius:14px;text-align:center;margin-bottom:40px;border:1px solid #222;}
+.section-title{margin:40px 0 20px;font-size:20px;}
 .games{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px;}
-.game-card{
-  background:#181818;border-radius:14px;overflow:hidden;
-  cursor:pointer;transition:.2s;border:1px solid #222;
-}
+.game-card{background:#181818;border-radius:14px;overflow:hidden;cursor:pointer;transition:.2s;border:1px solid #222;}
 .game-card:hover{transform:translateY(-6px);border-color:#444;}
 .game-card img{width:100%;height:140px;object-fit:cover;}
-.game-card h3{padding:10px;font-size:14px;color:#fff;}
+.game-card h3{padding:10px;font-size:14px;}
 .hidden{display:none;}
-.game-hero{
-  height:250px;background:linear-gradient(135deg,#4a148c,#e91e63);
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;border-radius:12px;position:relative;text-align:center;
-}
-.back-btn{
-  position:absolute;top:15px;left:15px;background:#000;color:#fff;
-  border:1px solid #444;padding:6px 12px;cursor:pointer;border-radius:6px;
-}
-.play-btn{
-  padding:10px 25px;background:#fff;color:#000;border:none;
-  border-radius:6px;cursor:pointer;margin-top:15px;font-weight:bold;
-}
+.game-hero{height:250px;background:linear-gradient(135deg,#4a148c,#e91e63);display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;position:relative;text-align:center;}
+.back-btn{position:absolute;top:15px;left:15px;background:#000;color:#fff;border:1px solid #444;padding:6px 12px;cursor:pointer;border-radius:6px;}
+.play-btn{padding:10px 25px;background:#fff;color:#000;border:none;border-radius:6px;cursor:pointer;margin-top:15px;font-weight:bold;}
 .frame-wrapper{position:relative;margin-top:20px;}
 #gameFrame{width:100%;height:600px;border:none;display:none;background:#000;}
-.fullscreen-btn{
-  position:absolute;bottom:10px;right:10px;background:#000;color:#fff;
-  border:1px solid #444;padding:6px 10px;cursor:pointer;border-radius:6px;z-index:5;
-}
-.hot-badge{
-  position:absolute;top:8px;left:8px;background:red;
-  padding:4px 8px;border-radius:6px;font-size:10px;color:#fff;
-}
-#backToLearn{
-  position:fixed;bottom:18px;right:18px;
-  background:#1a73e8;color:#fff;border:none;
-  padding:8px 16px;border-radius:8px;font-size:13px;
-  cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.3);
-}
-#backToLearn:hover{background:#1558b0;}
+.fullscreen-btn{position:absolute;bottom:10px;right:10px;background:#000;color:#fff;border:1px solid #444;padding:6px 10px;cursor:pointer;border-radius:6px;z-index:5;}
+.hot-badge{position:absolute;top:8px;left:8px;background:red;padding:4px 8px;border-radius:6px;font-size:10px;}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     LEARN SITE
-══════════════════════════════════════ -->
-<div id="learnSite">
-
-  <nav class="learn-nav">
-    <div class="brand">📚 Classroom 55X</div>
-    <div class="tab active" onclick="showSubject('reading',this)">Reading</div>
-    <div class="tab" onclick="showSubject('math',this)">Math</div>
-    <div class="tab" onclick="showSubject('science',this)">Science</div>
-  </nav>
-
-  <div class="learn-main" id="learnMain"></div>
-
-  <!-- Secret button — tiny, blends into background -->
-  <button id="secretBtn" title="" onclick="goToGames()"></button>
-
+<div class="navbar">
+  <a href="#" onclick="goHome()" style="text-decoration:none;color:white;">
+    <div class="logo">CLASSROOM 55X</div>
+  </a>
+  <input type="text" id="searchBar" placeholder="Search games..." onkeyup="searchGames()">
 </div>
 
-<!-- ══════════════════════════════════════
-     GAMES SITE
-══════════════════════════════════════ -->
-<div id="gamesSite">
-
-  <div class="navbar">
-    <div class="logo">CLASSROOM 55X</div>
-    <input type="text" id="searchBar" placeholder="Search games..." onkeyup="searchGames()">
+<div class="container">
+  <div class="sidebar">
+    <ul>
+      <li class="active" onclick="filterCategory('All',this)">All Games</li>
+      <li onclick="filterCategory('Arcade',this)">Arcade</li>
+      <li onclick="filterCategory('Sports',this)">Sports</li>
+      <li onclick="filterCategory('Platformer',this)">Platformer</li>
+      <li onclick="filterCategory('Multiplayer',this)">Multiplayer</li>
+      <li onclick="filterCategory('Horror',this)">Horror</li>
+    </ul>
   </div>
 
-  <div class="container">
-    <div class="sidebar">
-      <ul>
-        <li class="active" onclick="filterCategory('All',this)">All Games</li>
-        <li onclick="filterCategory('Arcade',this)">Arcade</li>
-        <li onclick="filterCategory('Sports',this)">Sports</li>
-        <li onclick="filterCategory('Platformer',this)">Platformer</li>
-        <li onclick="filterCategory('Multiplayer',this)">Multiplayer</li>
-        <li onclick="filterCategory('Horror',this)">Horror</li>
-      </ul>
+  <div class="main">
+    <div id="homePage">
+      <div class="home-hero">
+        <h1>Classroom 55X</h1>
+        <p>Unblocked Games — No Ads, Just Fun</p>
+      </div>
+      <div class="section-title">All Games</div>
+      <div class="games" id="gameGrid"></div>
     </div>
 
-    <div class="main">
-      <div id="homePage">
-        <div class="home-hero">
-          <h1>Classroom 55X</h1>
-          <p>Unblocked Games — No Ads, Just Fun</p>
-        </div>
-        <div class="section-title">All Games</div>
-        <div class="games" id="gameGrid"></div>
+    <div id="gamePage" class="hidden">
+      <div class="game-hero">
+        <button class="back-btn" onclick="goHome()">← Back</button>
+        <h2 id="gameTitle" style="color:#fff"></h2>
+        <button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
       </div>
-
-      <div id="gamePage" class="hidden">
-        <div class="game-hero">
-          <button class="back-btn" onclick="goHome()">← Back</button>
-          <h2 id="gameTitle" style="color:#fff"></h2>
-          <button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
-        </div>
-        <div class="frame-wrapper">
-          <iframe id="gameFrame"></iframe>
-          <button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
-        </div>
+      <div class="frame-wrapper">
+        <iframe id="gameFrame"></iframe>
+        <button class="fullscreen-btn" onclick="goFullscreen()">⛶</button>
       </div>
     </div>
   </div>
-
-  <button id="backToLearn" onclick="goToLearn()">← Back to Classroom</button>
-
 </div>
 
 <script>
-/* ────────────────────────────────────────
-   QUESTIONS DATA
-──────────────────────────────────────── */
-const subjects = {
-
-  reading: {
-    title: "5th Grade Reading",
-    icon: "📖",
-    desc: "Reading comprehension, vocabulary, and language arts for 5th grade.",
-    questions: [
-      {
-        q: "What is the main purpose of a thesis statement in an essay?",
-        options: ["To summarize the entire essay","To introduce the main argument or point","To list all the evidence","To write the conclusion"],
-        answer: 1
-      },
-      {
-        q: "Which literary device is used in the sentence: 'The wind whispered through the trees'?",
-        options: ["Simile","Metaphor","Personification","Alliteration"],
-        answer: 2
-      },
-      {
-        q: "What does the word 'infer' mean?",
-        options: ["To read carefully","To draw a conclusion from evidence","To summarize a passage","To memorize information"],
-        answer: 1
-      },
-      {
-        q: "In a story, what is the 'climax'?",
-        options: ["The beginning of the story","The most exciting or turning point","The part where characters are introduced","The resolution of the conflict"],
-        answer: 1
-      },
-      {
-        q: "Which of the following is an example of a compound sentence?",
-        options: [
-          "The dog ran fast.",
-          "She went to the store and bought milk.",
-          "Although it was raining, we played outside.",
-          "Running through the park."
-        ],
-        answer: 1
-      }
-    ]
-  },
-
-  math: {
-    title: "5th Grade Math",
-    icon: "🔢",
-    desc: "Fractions, decimals, geometry, and more for 5th grade students.",
-    questions: [
-      {
-        q: "What is 3/4 + 1/2?",
-        options: ["4/6","5/4","1 1/4","2/3"],
-        answer: 2
-      },
-      {
-        q: "What is the volume of a rectangular prism with length 4, width 3, and height 5?",
-        options: ["12","20","60","35"],
-        answer: 2
-      },
-      {
-        q: "Which of the following is equivalent to 0.75?",
-        options: ["1/2","2/3","3/4","4/5"],
-        answer: 2
-      },
-      {
-        q: "What is 12 × 15?",
-        options: ["170","180","175","160"],
-        answer: 1
-      },
-      {
-        q: "A triangle has angles of 90° and 45°. What is the third angle?",
-        options: ["30°","55°","45°","60°"],
-        answer: 2
-      }
-    ]
-  },
-
-  science: {
-    title: "5th Grade Science",
-    icon: "🔬",
-    desc: "Earth science, life science, and physical science for 5th graders.",
-    questions: [
-      {
-        q: "What is the process by which plants make their own food using sunlight?",
-        options: ["Respiration","Photosynthesis","Transpiration","Germination"],
-        answer: 1
-      },
-      {
-        q: "Which planet is known as the Red Planet?",
-        options: ["Venus","Jupiter","Mars","Saturn"],
-        answer: 2
-      },
-      {
-        q: "What are the three states of matter?",
-        options: [
-          "Hot, warm, cold",
-          "Solid, liquid, gas",
-          "Water, ice, steam",
-          "Element, compound, mixture"
-        ],
-        answer: 1
-      },
-      {
-        q: "What force pulls objects toward the center of the Earth?",
-        options: ["Magnetism","Friction","Gravity","Inertia"],
-        answer: 2
-      },
-      {
-        q: "Which layer of the Earth is the outermost?",
-        options: ["Mantle","Inner core","Outer core","Crust"],
-        answer: 3
-      }
-    ]
-  }
-
-};
-
-/* ────────────────────────────────────────
-   RENDER QUESTIONS
-──────────────────────────────────────── */
-function showSubject(key, tabEl) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  if (tabEl) tabEl.classList.add('active');
-
-  const sub = subjects[key];
-  const main = document.getElementById('learnMain');
-
-  let html = `
-    <div class="subject-hero">
-      <h1>${sub.icon} ${sub.title}</h1>
-      <p>${sub.desc}</p>
-    </div>
-  `;
-
-  sub.questions.forEach((q, i) => {
-    const name = `q${key}${i}`;
-    html += `
-      <div class="question-card" id="card-${name}">
-        <div class="q-num">Question ${i+1} of ${sub.questions.length}</div>
-        <div class="q-text">${q.q}</div>
-        <div class="options">
-          ${q.options.map((opt, j) => `
-            <label>
-              <input type="radio" name="${name}" value="${j}">
-              ${opt}
-            </label>
-          `).join('')}
-        </div>
-        <button class="check-btn" onclick="checkAnswer('${name}',${q.answer})">Check Answer</button>
-        <div class="result" id="res-${name}"></div>
-      </div>
-    `;
-  });
-
-  main.innerHTML = html;
-  main.scrollTop = 0;
-  window.scrollTo(0,0);
-}
-
-function checkAnswer(name, correct) {
-  const selected = document.querySelector(`input[name="${name}"]:checked`);
-  const res = document.getElementById(`res-${name}`);
-  if (!selected) {
-    res.style.display = 'block';
-    res.className = 'result wrong';
-    res.textContent = 'Please select an answer first.';
-    return;
-  }
-  res.style.display = 'block';
-  if (parseInt(selected.value) === correct) {
-    res.className = 'result correct';
-    res.textContent = '✅ Correct! Great job!';
-  } else {
-    res.className = 'result wrong';
-    res.textContent = '❌ Not quite — try reviewing your notes!';
-  }
-}
-
-// Load reading by default
-showSubject('reading', null);
-
-/* ────────────────────────────────────────
-   SWITCH BETWEEN SITES
-──────────────────────────────────────── */
-function goToGames() {
-  document.getElementById('learnSite').style.display = 'none';
-  document.getElementById('gamesSite').style.display = 'block';
-  renderGames();
-}
-function goToLearn() {
-  document.getElementById('gamesSite').style.display = 'none';
-  document.getElementById('learnSite').style.display = 'block';
-}
-
-/* ────────────────────────────────────────
-   GAMES
-──────────────────────────────────────── */
-const games = [
+const games=[
   {title:"Basket Random",category:"Sports",type:"iframe",url:"https://jasongamesdev.github.io/basket-random/",thumb:"https://jasongamesdev.github.io/basket-random/basket-random.png",hot:true},
   {title:"Soccer Random",category:"Sports",type:"iframe",url:"https://www.twoplayergames.org/embed/soccer-random",thumb:"https://dummyimage.com/300x170/111/fff&text=Soccer+Random"},
   {title:"Smash Karts",category:"Multiplayer",type:"iframe",url:"https://jasongamesdev.github.io/smash-karts/",thumb:"https://jasongamesdev.github.io/smash-karts/smash-karts.png",hot:true},
@@ -446,23 +114,23 @@ const games = [
   {title:"Subway Surfers",category:"Platformer",type:"iframe",url:"https://jasongamesdev.github.io/subway-surfers/",thumb:"https://jasongamesdev.github.io/subway-surfers/subway-surfers.png"},
 ];
 
-let currentGame = null;
+let currentGame=null;
 
 function renderGames(filter="All"){
-  const grid = document.getElementById("gameGrid");
-  grid.innerHTML = "";
-  games.forEach(g => {
-    if(filter==="All" || g.category===filter) createCard(g, grid);
+  const grid=document.getElementById("gameGrid");
+  grid.innerHTML="";
+  games.forEach(g=>{
+    if(filter==="All"||g.category===filter) createCard(g,grid);
   });
 }
 
-function createCard(g, container){
-  let card = document.createElement("div");
-  card.className = "game-card";
-  card.onclick = () => openGame(g);
-  card.innerHTML = `
+function createCard(g,container){
+  let card=document.createElement("div");
+  card.className="game-card";
+  card.onclick=()=>openGame(g);
+  card.innerHTML=`
     <div style="position:relative">
-      ${g.hot ? '<div class="hot-badge">HOT</div>' : ''}
+      ${g.hot?'<div class="hot-badge">HOT</div>':''}
       <img src="${g.thumb}">
     </div>
     <h3>${g.title}</h3>
@@ -471,34 +139,34 @@ function createCard(g, container){
 }
 
 function searchGames(){
-  const input = document.getElementById("searchBar").value.toLowerCase();
-  const grid = document.getElementById("gameGrid");
-  grid.innerHTML = "";
-  games.forEach(g => {
-    if(g.title.toLowerCase().includes(input)) createCard(g, grid);
+  const input=document.getElementById("searchBar").value.toLowerCase();
+  const grid=document.getElementById("gameGrid");
+  grid.innerHTML="";
+  games.forEach(g=>{
+    if(g.title.toLowerCase().includes(input)) createCard(g,grid);
   });
 }
 
-function filterCategory(cat, el){
-  document.querySelectorAll(".sidebar li").forEach(li => li.classList.remove("active"));
+function filterCategory(cat,el){
+  document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
   if(el) el.classList.add("active");
   renderGames(cat);
 }
 
 function openGame(game){
-  currentGame = game;
+  currentGame=game;
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("gamePage").classList.remove("hidden");
-  document.getElementById("gameTitle").innerText = game.title;
-  document.querySelector(".play-btn").style.display = "inline-block";
+  document.getElementById("gameTitle").innerText=game.title;
+  document.querySelector(".play-btn").style.display="inline-block";
 }
 
 function startGame(){
-  const frame = document.getElementById("gameFrame");
-  frame.style.display = "block";
-  document.querySelector(".play-btn").style.display = "none";
+  const frame=document.getElementById("gameFrame");
+  frame.style.display="block";
+  document.querySelector(".play-btn").style.display="none";
   if(currentGame.type==="iframe"){
-    frame.src = currentGame.url;
+    frame.src=currentGame.url;
   } else {
     fetch(currentGame.file).then(r=>r.text()).then(t=>frame.srcdoc=t);
   }
@@ -511,10 +179,11 @@ function goFullscreen(){
 function goHome(){
   document.getElementById("gamePage").classList.add("hidden");
   document.getElementById("homePage").classList.remove("hidden");
-  const frame = document.getElementById("gameFrame");
-  frame.src=""; frame.srcdoc=""; frame.style.display="none";
+  const frame=document.getElementById("gameFrame");
+  frame.src="";frame.srcdoc="";frame.style.display="none";
 }
-</script>
 
+renderGames();
+</script>
 </body>
 </html>
