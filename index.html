@@ -8,11 +8,7 @@
 <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 font-family:Arial;
@@ -32,10 +28,7 @@ top:0;
 z-index:10;
 }
 
-.logo{
-font-size:22px;
-font-weight:bold;
-}
+.logo{font-size:22px;font-weight:bold;}
 
 #searchBar{
 padding:12px 18px;
@@ -44,19 +37,11 @@ border:1px solid #444;
 background:#181818;
 color:#fff;
 width:340px;
-font-size:18px;
+font-size:16px;
 outline:none;
-transition:.25s;
 }
 
-#searchBar:focus{
-border-color:#888;
-box-shadow:0 0 15px rgba(255,255,255,0.15);
-}
-
-.container{
-display:flex;
-}
+.container{display:flex;}
 
 .sidebar{
 width:220px;
@@ -67,15 +52,13 @@ padding-top:20px;
 border-right:1px solid #222;
 }
 
-.sidebar ul{
-list-style:none;
-}
+.sidebar ul{list-style:none;}
 
 .sidebar li{
 padding:12px 20px;
 color:#aaa;
 cursor:pointer;
-transition:.25s;
+transition:.2s;
 }
 
 .sidebar li:hover,
@@ -135,9 +118,7 @@ padding:10px;
 font-size:14px;
 }
 
-.hidden{
-display:none;
-}
+.hidden{display:none;}
 
 .game-hero{
 height:250px;
@@ -159,8 +140,8 @@ background:#000;
 color:#fff;
 border:1px solid #444;
 padding:6px 12px;
-cursor:pointer;
 border-radius:6px;
+cursor:pointer;
 }
 
 .play-btn{
@@ -218,13 +199,7 @@ font-size:10px;
 <div class="logo">CLASSROOM 55X</div>
 </a>
 
-<input
-type="text"
-id="searchBar"
-placeholder="Search for games..."
-autocomplete="off"
-onkeyup="searchGames()">
-
+<input type="text" id="searchBar" placeholder="Search games..." onkeyup="searchGames()">
 </div>
 
 <div class="container">
@@ -246,11 +221,10 @@ onkeyup="searchGames()">
 
 <div class="home-hero">
 <h1>Classroom 55X</h1>
-<p>Unblocked Games — No Ads, Just Fun, Made by Andy:P</p>
+<p>Unblocked Games — No Ads, Just Fun</p>
 </div>
 
 <div class="section-title">All Games</div>
-
 <div class="games" id="gameGrid"></div>
 
 </div>
@@ -264,8 +238,6 @@ onkeyup="searchGames()">
 <h2 id="gameTitle"></h2>
 
 <button class="play-btn" onclick="startGame()">CLICK TO PLAY</button>
-
-If it doesn't load refresh my site:3
 
 </div>
 
@@ -285,199 +257,104 @@ If it doesn't load refresh my site:3
 <script>
 
 const games = [
-
-{
-title:"Basket Random",
-category:"Sports",
-type:"iframe",
-url:"https://jasongamesdev.github.io/basket-random/",
-thumb:"https://jasongamesdev.github.io/basket-random/basket-random.png",
-hot:true
-},
-
-{
-title:"Ragdoll Hit",
-category:"Platformer",
-type:"iframe",
-url:"https://jasongamesdev.github.io/ragdoll-hit/",
-thumb:"https://jasongamesdev.github.io/ragdoll-hit/ragdoll-hit.png"
-},
-
-{
-title:"Dragon Ball Z",
-category:"Arcade",
-type:"iframe",
-url:"https://example.com",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Dragon+Ball+Z"
-},
-
-{
-title:"Dragon Simulator 3D",
-category:"Arcade",
-type:"iframe",
-url:"https://example.com",
-thumb:"https://dummyimage.com/300x170/111/fff&text=Dragon+Simulator+3D"
-}
-
+{title:"Basket Random",category:"Sports",type:"iframe",url:"https://jasongamesdev.github.io/basket-random/",thumb:"https://jasongamesdev.github.io/basket-random/basket-random.png",hot:true},
+{title:"Smash Karts",category:"Multiplayer",type:"iframe",url:"https://jasongamesdev.github.io/smash-karts/",thumb:"https://jasongamesdev.github.io/smash-karts/smash-karts.png",hot:true},
+{title:"Friday Night Funkin",category:"Arcade",type:"iframe",url:"https://jasongamesdev.github.io/friday-night-funkin/",thumb:"https://jasongamesdev.github.io/friday-night-funkin/friday-night-funkin.png"},
+{title:"Drift Boss",category:"Platformer",type:"iframe",url:"https://jasongamesdev.github.io/drift-boss/",thumb:"https://jasongamesdev.github.io/drift-boss/drift-boss.png"},
+{title:"Polytrack",category:"Arcade",type:"iframe",url:"https://jasongamesdev.github.io/polytrack/",thumb:"https://jasongamesdev.github.io/polytrack/polytrack.png"},
+{title:"FNAF 2",category:"Horror",type:"iframe",url:"https://jasongamesdev.github.io/fnaf-2/",thumb:"https://jasongamesdev.github.io/fnaf-2/fnaf-2.png",hot:true},
+{title:"Geometry Dash",category:"Platformer",type:"xml",file:"https://cdn.jsdelivr.net/gh/papamamia/gonzales@main/StreamingAssets/1.xml",thumb:"https://dummyimage.com/300x170/111/fff&text=Geometry+Dash"},
+{title:"Snow Rider 3D",category:"Arcade",type:"iframe",url:"https://jasongamesdev.github.io/snow-rider3d/",thumb:"https://jasongamesdev.github.io/snow-rider3d/snow-rider3d.png"},
+{title:"Cookie Clicker",category:"Arcade",type:"iframe",url:"https://jasongamesdev.github.io/cookie-clicker/",thumb:"https://jasongamesdev.github.io/cookie-clicker/cookie-clicker.png",hot:true},
+{title:"Moto X3M",category:"Arcade",type:"iframe",url:"https://jasongamesdev.github.io/moto-x3m/",thumb:"https://jasongamesdev.github.io/moto-x3m/moto-x3m.png",hot:true}
 ];
 
 let currentGame=null;
 
 function renderGames(filter="All"){
-
 const grid=document.getElementById("gameGrid");
-
 grid.innerHTML="";
 
 games.forEach(g=>{
-
 if(filter==="All"||g.category===filter){
-
 createCard(g,grid);
-
 }
-
 });
-
 }
 
 function createCard(g,container){
-
 let card=document.createElement("div");
-
 card.className="game-card";
-
 card.onclick=()=>openGame(g);
 
 card.innerHTML=`
-
 <div style="position:relative">
-
 ${g.hot?'<div class="hot-badge">HOT</div>':''}
-
 <img src="${g.thumb}" onerror="this.src='https://dummyimage.com/300x170/111/fff&text=No+Image'">
-
 </div>
-
 <h3>${g.title}</h3>
-
 `;
 
 container.appendChild(card);
-
 }
 
+/* FIXED SEARCH */
 function searchGames(){
-
 const input=document.getElementById("searchBar").value.toLowerCase();
-
 const grid=document.getElementById("gameGrid");
 
 grid.innerHTML="";
 
-if(input===""){
-
-renderGames();
-
-return;
-
-}
-
-const filtered=games.filter(g=>
-
+const filtered=games.filter(g =>
 g.title.toLowerCase().includes(input)
-
 );
 
-if(filtered.length===0){
-
-grid.innerHTML=`
-
-<div style="
-width:100%;
-padding:30px;
-background:#181818;
-border:1px solid #222;
-border-radius:12px;
-font-size:18px;
-text-align:center;
-color:#888;
-">
-
-No games found
-
-</div>
-
-`;
-
+if(input===""){
+renderGames();
 return;
+}
 
+if(filtered.length===0){
+grid.innerHTML="<div style='padding:20px;color:#888'>No games found</div>";
+return;
 }
 
 filtered.forEach(g=>createCard(g,grid));
-
 }
 
 function filterCategory(cat,el){
-
-document.querySelectorAll(".sidebar li").forEach(li=>
-
-li.classList.remove("active")
-
-);
-
+document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
 if(el) el.classList.add("active");
-
 renderGames(cat);
-
 }
 
 function openGame(game){
-
 currentGame=game;
-
 document.getElementById("homePage").classList.add("hidden");
-
 document.getElementById("gamePage").classList.remove("hidden");
-
 document.getElementById("gameTitle").innerText=game.title;
-
 document.getElementById("gameFrame").style.display="none";
-
 document.querySelector(".play-btn").style.display="inline-block";
-
 }
 
 function startGame(){
-
 const frame=document.getElementById("gameFrame");
-
 frame.style.display="block";
-
 document.querySelector(".play-btn").style.display="none";
-
 frame.src=currentGame.url;
-
 }
 
 function goFullscreen(){
-
 document.getElementById("gameFrame").requestFullscreen();
-
 }
 
 function goHome(){
-
 document.getElementById("gamePage").classList.add("hidden");
-
 document.getElementById("homePage").classList.remove("hidden");
 
 const frame=document.getElementById("gameFrame");
-
 frame.src="";
-
 frame.style.display="none";
-
 }
 
 renderGames();
